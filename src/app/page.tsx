@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { signOut } from '@/app/actions/auth'
 import TariffCard from '@/app/components/TariffCard'
+import Link from "next/link";
 
 export default async function HomePage() {
     const supabase = await createClient()
@@ -25,24 +26,26 @@ export default async function HomePage() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <nav className="bg-white border-b px-8 py-4 flex justify-between items-center">
+            <nav className="bg-white border-b px-6 py-4 flex justify-between items-center">
                 <span className="font-bold text-lg">Tariff Gift App</span>
                 {user ? (
                     <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-500">{user.email}</span>
+                        <span className="text-sm text-gray-400">{user.email}</span>
                         <form action={signOut}>
-                            <button className="text-sm underline text-gray-600 hover:text-black">
+                            <button
+                                type="submit"
+                                className="text-sm font-medium text-red-600 hover:text-red-700"
+                            >
                                 Logout
                             </button>
                         </form>
                     </div>
                 ) : (
-                    <a href="/login" className="text-sm underline">
+                    <Link href="/login" className="text-sm font-medium underline">
                         Sign in
-                    </a>
+                    </Link>
                 )}
             </nav>
-
             <div className="max-w-5xl mx-auto p-8">
                 <h1 className="text-2xl font-bold mb-6">Available Tariffs</h1>
 

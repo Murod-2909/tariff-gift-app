@@ -1,15 +1,18 @@
 import nodemailer from 'nodemailer'
 
+
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST!,
+    host: process.env.SMTP_HOST as string,
     port: Number(process.env.SMTP_PORT),
     secure: true,
-    family: 4,
     auth: {
-        user: process.env.SMTP_USER!,
-        pass: process.env.SMTP_PASS!,
+        user: process.env.SMTP_USER as string,
+        pass: process.env.SMTP_PASS as string,
     },
-})
+    tls: {
+        rejectUnauthorized: false,
+    },
+} as nodemailer.TransportOptions)
 
 export async function sendActivationEmail(params: {
     to: string
@@ -29,6 +32,10 @@ export async function sendActivationEmail(params: {
           ${params.activationCode}
         </div>
         <p>Go to the activation page and enter this code to unlock your tariff.</p>
+        <a href="${process.env.NEXT_PUBLIC_APP_URL}/activate" 
+           style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 8px;">
+          Activate Gift
+        </a>
         <p style="color: #888; font-size: 12px; margin-top: 24px;">
           This code can only be used once.
         </p>
