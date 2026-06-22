@@ -10,7 +10,6 @@ export default async function AdminLayout({
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    // Note: login sahifasi bu layout'dan tashqarida — faqat kirgan adminlar uchun
     if (!user) redirect('/admin/login')
 
     const { data: profile } = await supabase
